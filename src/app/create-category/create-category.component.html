@@ -1,0 +1,47 @@
+<div class="container-fluid grey">
+    <div class="container">
+        <div class="card">
+            <div class="card-header h6 text-uppercase bg-dark text-light text-lg-start">
+                Create New Category
+            </div>
+            <div class="card-body">
+                            
+                            <div class="form-outline mb-4">
+                                <label class="form-label me-2"  for="productCategory" >Category</label>
+                                <div>
+                                <select #productCategory formControlName="productCategory"  (change)="onCategoryChange(productCategory.value)">
+                                    <option *ngFor="let category of primaryCategory" [value]="category.id">
+                                        {{category.categoryName}}
+                                      </option>
+                                
+                                </select>
+                            </div>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label me-2"  for="newSubCategory" >New Sub Category Name</label>
+                                <input #newSubCategory type="text" (change)="registerNewCategogy(newSubCategory.value)" id="newSubCategory" class="form-control form-control-sm">
+                            </div>
+                     
+                    <button type="button" (click)="AddNewCategory()">Save</button>
+                    <div class="row mt-5">
+                        <div class="col-md-6">
+                            <div *ngIf="subCategories.length >0" class="card">
+                                <div class="card-header text-uppercase bg-light text-dark">
+                                Existing Categories
+                                </div>
+                                <div class="card-body">
+                            <ul *ngIf="subCategories.length >0" class="list-group">
+                                <li *ngFor="let category of subCategories" class="list-group-item">{{category.display_name}}</li>
+                            </ul>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <h5 style="color: red;margin-top: 10px;" *ngIf="subCategories.length==0">No Sub Categories Found for {{currentParent.categoryName}}</h5>
+                    <h5 style="color: red;margin-top: 10px" *ngIf="categoryAlreadyExists"><span style="color:black">{{newSubCategory.value}}</span> Already Exists in <span style="color:black">{{currentParent.categoryName}}</span> Category, Duplicate Not Allowed</h5>
+                    <h5 style="color: red;margin-top: 10px" *ngIf="maxExhausted">You can add only 8 Sub Categories per Category</h5>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="product-wizard-container">
+    <app-steps></app-steps>
+  <div class="step-wizard-container">
+    <div class="product-wizard-step">
+        <ng-container [ngSwitch]="(currentStep | async)?.stepIndex">
+            <ng-container *ngSwitchCase="'1'">
+              <app-product-metadata [step]="$any(currentStep | async)" ></app-product-metadata>
+            </ng-container>
+            <ng-container *ngSwitchCase="'2'">
+              <app-step-template [step]="$any(currentStep | async)"></app-step-template>
+            </ng-container>
+            <ng-container *ngSwitchCase="'3'">
+              <app-step-template [step]="$any(currentStep | async)"></app-step-template>
+            </ng-container>
+        </ng-container>
+    </div>
+    
+  </div>
+</div>
+<div class="container">
+    <div style="height: 30px;display:flex;align-items:flex-end;position: relative;justify-content: right" class="ms-0 mt-0 me-0  px-3 text-uppercase "><div>
+        <button (click)="onNextStep()" [disabled]="!(currentStep | async)?.isComplete" class="wizard-continue-btn">
+            {{ showButtonLabel() }}
+          </button>
+
+    </div></div>
+
+    
+    </div>

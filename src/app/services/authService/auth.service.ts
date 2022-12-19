@@ -52,8 +52,6 @@ login(userName:string,password:string):Observable<any>{
 checkLoginStatus(){
   console.log("Checking Logging Status");
 
-  console.log(this.isLoggedIn);
-
 const isLogged = this.localStore.getData("isLogged", ObjectType.text, false);
   if (isLogged == null || isLogged == "false") {
     console.log("Redirecting to Login Page");

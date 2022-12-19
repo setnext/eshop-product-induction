@@ -1,0 +1,27 @@
+.product-wizard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.step-wizard-container {
+    flex: 1;
+    margin: 0px 32px;
+}
+
+.wizard-continue-btn{
+    color: rgb(255, 255, 255);
+    background: blue;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1.15em;
+    cursor: pointer;
+    border: none !important;
+    
+
+}
+.wizard-continue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}

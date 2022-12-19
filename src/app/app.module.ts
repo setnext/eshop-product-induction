@@ -12,6 +12,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { HomeComponent } from './home/home.component';
+import { CreateProductComponent } from './create-product/create-product.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
+import { StepsComponent } from './steps/steps.component';
+import { StepTemplateComponent } from './step-template/step-template.component';
+import { FormPageComponent } from './form-page/form-page.component';
+import { CompletePageComponent } from './complete-page/complete-page.component';
+import { ProductWizardComponent } from './product-wizard/product-wizard.component';
+import { ProductMetadataComponent } from './product-metadata/product-metadata.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -24,13 +32,20 @@ export const configFactory = (configService: ConfigService) => {
     FooterComponent,
     LoginComponent,
     ProductListComponent,
-    HomeComponent
+    HomeComponent,
+    CreateProductComponent,
+    CreateCategoryComponent,
+    StepsComponent,
+    StepTemplateComponent,
+    FormPageComponent,
+    CompletePageComponent,
+    ProductWizardComponent,
+    ProductMetadataComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
     ReactiveFormsModule
   ],
   providers: [AuthService,{

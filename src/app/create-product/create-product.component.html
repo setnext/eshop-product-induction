@@ -1,0 +1,131 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="card">
+      <div class="card-header h6 text-uppercase bg-dark text-light">
+        {{step.stepName}}
+      </div>
+      <div class="card-body">
+        <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="productName">Product Name</label>
+                <input type="text" id="productName"  placeholder ="Uniquely distinguishable product Name ex: IPhone Black 16 GB " formControlName="productName"
+                  class="form-control form-control-sm w-50" />
+
+              </div>
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="productDescription">Description</label>
+                <textarea class="form-control" placeholder="Explain about your product. Description should not be less than 200 letters" formControlName="productDescription" id="productDescription"
+                  rows="3"></textarea>
+              </div>
+              <hr class="mt-4">
+              <div class="row">
+                <div class="col-md-4 mb-4">
+                  <label class="form-label me-2" for="productCategory">Category</label>
+                  <select #productCategory id="productCategory" formControlName="productCategory" class="w-20"
+                    (change)="onCategoryChange(productCategory.value)">
+                    <option *ngFor="let category of primaryCategory" [value]="category.id">
+                      {{category.categoryName}}
+                    </option>
+
+                  </select>
+
+
+
+
+                </div>
+
+
+                <div class="col-md-8 mb-4">
+                  <div formArrayName="subCategories" *ngIf="subCategories.length > 0">
+
+                    <div *ngFor="let cat of subCategories.controls;let i = index" class="form-check form-xcheck-inline">
+                      <input #cat class="form-check-input" (change)="onSubCategoryClick(i)" formControlName="{{i}}"
+                        type="checkbox" id="{{i}}" value="{{cat}}">
+                      <label class="form-check-label" for="i">{{subCategoryList[i].display_name}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-4">
+           
+
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="form-label" for="tags">Tags</label>
+                    <input type="text" #tag id="tagName" style="min-height:30px;min-width:300px" formControlName="tags"
+                      class="form-inline ms-3" formControlName="tags" />
+                    <button type="button" (click)="addTag(tag.value)" id="addtag" class="button-primary ms-3">Add
+                      Tag</button>
+                  </div>
+
+
+
+                </div>
+
+                <div class="col-md-5 col-sm-12">
+                  <div *ngFor="let tag of tags;let i = index" class="form-check form-check-inline">
+                    <input class="form-check-input form-inline" (change)="onTagChange(i)" type="checkbox"
+                      id="{{'tag'+i}}" [checked]="true" value="{{tag}}">
+                    <label class="form-check-label" for="i">{{tag}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12 text-info">
+                  Tags will help the product search. Ex: 'winter clothing', 'price under 20'
+                </div>
+              </div>
+              <hr class="mt-4">
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="brand">Brand</label>
+                <input type="text" id="brand" formControlName="brand" placeholder="Manufacturer's Brand Name" class="form-control form-control-sm w-50" />
+
+              </div>
+
+              <hr>
+
+              <label class="form-label mb-4" for="brand">Price Info</label>
+
+              <div class="hstack gap-3">
+
+                <div>
+                  <label class="form-label" for="mrp_price">MRP Price</label>
+                  <input type="text" id="mrp_price" placeholder="$ Amount" formControlName="mrp_price" class="form-control form-control-sm" />
+                </div>
+                <div>
+                  <label class="form-label" for="sales_price">Sales Price</label>
+                  <input type="text" id="sales_price" placeholder="$ Amount" formControlName="sales_price" class="form-control form-control-sm " />
+                </div>
+                <div>
+                  <label class="form-label" for="discount">Discount</label>
+                  <input type="text" id="discount" placeholder="%" formControlName="discount" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <hr>
+
+              <div class="d-flex justify-content-end pt-3">
+                <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>
+                <button class="step-complete-btn" (click)="onCompleteStep()">
+                  <span class="completed-step-check material-icons">
+                    {{ step.isComplete ? 'check_circle' : 'panorama_fish_eye' }}
+                  </span>Complete Step {{ step.stepIndex }}</button>
+              </div>
+
+
+
+            </div>
+
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div style="height: 50px;display:flex;align-items: center;position: relative;justify-content: center;font-weight:700;" class="h5 ms-0 mt-1 me-0 bg-light px-3 bg-light text-uppercase "><div> Create New Product</div></div>
+<div class="form-steps-container">
+    
+    <ng-container *ngFor="let step of steps | async; let i = index;">
+        
+        <div (click)="onStepClick(step)"
+            [ngClass]="{ 'step-complete': step.isComplete, 'step-incomplete': !step.isComplete, 'step-current': (currentStep | async)?.stepIndex === step.stepIndex }"
+            class="step-bubble">{{ step.stepIndex }}</div>
+        <div *ngIf="i <  $any(steps| async)?.length - 1" class="step-divider">{{step.stepName}}</div>
+    </ng-container>
+</div>

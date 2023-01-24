@@ -1,166 +1,193 @@
 <div class="container-fluid">
-    <div class="container">
-      <div class="card">
-        <div class="card-header h6 text-uppercase bg-dark text-light">
-          {{step.stepName}}
-        </div>
-        <div class="card-body">
-          <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-outline mb-4">
-  
-                  <label class="form-label" for="productName">Product Name</label>
-                  <input type="text" id="productName"  placeholder ="Uniquely distinguishable product Name ex: IPhone Black 16 GB " formControlName="productName"
-                    class="form-control form-control-sm w-50" />
 
-                   
-                    <div *ngIf="submitted && productForm.controls.productName.errors">
-                       
-                        <div class="error" *ngIf="productForm.controls.productName.errors.required">* Product Name is required</div>
-                      </div>
-  
-                </div>
-                <div class="form-outline mb-4">
-  
-                  <label class="form-label" for="productDescription">Description</label>
-                  <textarea class="form-control" placeholder="Explain about your product. Description should not be less than 200 letters" formControlName="productDescription" id="productDescription"
-                    rows="3"></textarea>
-                    <div *ngIf="submitted && productForm.controls.productDescription.errors">
-                        <div class="error" *ngIf="productForm.controls.productDescription.errors.required">* Product Description is required</div>
-                        <div class="error" *ngIf="productForm.controls.productDescription.errors.minlength">* Product Description should not be less than 100 Characters length</div>
-                    </div>
-                </div>
-                <hr class="mt-4">
-                <div class="row">
-                  <div class="col-md-4 mb-4">
-                    <label class="form-label me-2" for="productCategory">Category</label>
-                    <select #productCategory id="productCategory" formControlName="productCategory" class="w-20"
-                      (change)="onCategoryChange(productCategory.value)">
-                      <option *ngFor="let category of primaryCategory" [value]="category.id">
-                        {{category.categoryName}}
-                      </option>
-  
-                    </select>
-  
-                    <div *ngIf="submitted && productForm.controls.productCategory.errors">
-                        <div class="error" *ngIf="productForm.controls.productCategory.errors.required">* Select the Product Category</div>
-                    </div>
-  
-  
-                  </div>
-  
-  
-                  <div class="col-md-8 mb-4">
-                    <div formArrayName="subCategories" *ngIf="subCategories.length > 0">
-  
-                      <div *ngFor="let cat of subCategories.controls;let i = index" class="form-check form-xcheck-inline">
-                        <input #cat class="form-check-input" (change)="onSubCategoryClick(cat.value,i)" formControlName="{{i}}"
-                          type="checkbox" id="{{i}}" value="{{cat}}">
-                        <label class="form-check-label" for="i">{{subCategoryList[i].display_name}}</label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div *ngIf="submitted && selectedCategoryList.length <=1">
-                    <div class="error">* Minimum One Sub Category should be selected </div>
-                </div>
-                  
-                </div>
-                <hr class="mt-4">
-             
-  
-                <div class="row">
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label class="form-label" for="tags">Tags</label>
-                      <input type="text" #tag id="tagName" style="min-height:30px;min-width:300px" formControlName="tags"
-                        class="form-inline ms-3" formControlName="tags" />
-                      <button type="button" (click)="addTag(tag.value)" id="addtag" class="button-primary ms-3">Add
-                        Tag</button>
-                    </div>
-                    <div *ngIf="submitted && tags.length <=0">
-                        <div class="error">* Add Minimu One Tag </div>
-                    </div>
-  
-  
-  
-                  </div>
-  
-                  <div class="col-md-5 col-sm-12">
-                    <div *ngFor="let tag of tags;let i = index" class="form-check form-check-inline">
-                      <input class="form-check-input form-inline" (change)="onTagChange(i)" type="checkbox"
-                        id="{{'tag'+i}}" [checked]="true" value="{{tag}}">
-                      <label class="form-check-label" for="i">{{tag}}</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-md-12 text-info">
-                    Tags will help the product search. Ex: 'winter clothing', 'price under 20'
-                  </div>
-                </div>
-                <hr class="mt-4">
-                <div class="form-outline mb-4">
-  
-                  <label class="form-label" for="brand">Brand</label>
-                  <input type="text" id="brand" formControlName="brand" placeholder="Manufacturer's Brand Name" class="form-control form-control-sm w-50" />
-                  <div *ngIf="submitted && productForm.controls.brand.errors">
-                       
-                    <div class="error" *ngIf="productForm.controls.brand.errors.required">* Brand Name is required</div>
-                  </div>
-                </div>
-  
-                <hr>
-  
-                <label class="form-label mb-4" for="brand">Price Info</label>
-  
-                <div class="hstack gap-3">
-  
-                  <div>
-                    <label class="form-label" for="mrp_price">MRP Price</label>
-                    <input type="number" id="mrp_price" placeholder="$ Amount" formControlName="mrp_price" class="form-control form-control-sm" />
-                  </div>
-                  <div>
-                    <label class="form-label" for="sales_price">Sales Price</label>
-                    <input type="number" id="sales_price" placeholder="$ Amount" formControlName="sales_price" class="form-control form-control-sm " />
-                  </div>
-                  <div>
-                    <label class="form-label" for="discount">Discount</label>
-                    <input type="number" id="discount" placeholder="%" formControlName="discount" class="form-control form-control-sm" />
-                  </div>
-                
-                  
+  <div class="container">
+    <div *ngIf="isLocalDataExist" class="alert alert-info" role="alert">
+      <i class="fa fa-2x fa-info-circle"></i> Un-Submitted Data Found, If you like, you can Save & Continue or You can
+      <button type="button" (click)="clearData()" class="btn btn-primary"> Clear</button> it and Start from the Scratch.
+    </div>
+    <div class="card">
+      <div class="card-header h6 text-uppercase bg-dark text-light">
+        {{step.stepName}}
+      </div>
 
+      <div class="card-body">
+        <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="productName">Product Name</label>
+                <input type="text" id="productName"
+                  placeholder="Uniquely distinguishable product Name ex: IPhone Black 16 GB "
+                  formControlName="productName" class="form-control form-control-sm w-50" />
+
+
+                <div *ngIf="submitted && productForm.controls.productName.errors">
+
+                  <div class="error" *ngIf="productForm.controls.productName.errors.required">* Product Name is required
+                  </div>
                 </div>
-                <div *ngIf="submitted && productForm.controls.mrp_price.errors">
-                       
-                    <div class="error" *ngIf="productForm.controls.mrp_price.errors.required">* MRP is must</div>
+                <div *ngIf="submitted && isProductFound">
+
+                  <div class="error">* Product Name already Exists
                   </div>
-                  <div *ngIf="submitted && productForm.controls.sales_price.errors">
-                       
-                    <div class="error" *ngIf="productForm.controls.sales_price.errors.required">* Sale Price is must</div>
+                  <div class="error">* Existing Product URL: <a href={{exitingProductUrl}} target="_blank">{{exitingProductUrl}}</a>
                   </div>
-                <hr>
-  
-                <div class="d-flex justify-content-start pt-3">
-                  <button type="submit" class="btn btn-warning  ms-2">Save Data</button>
                 </div>
 
-                <div *ngIf="isSaveSuccessful">
-                    <h2> Data Saved Successfully, Please continue for the next steps </h2>
-
-                </div>
-  
-  
-  
               </div>
-  
-  
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="productDescription">Description</label>
+                <textarea class="form-control"
+                  placeholder="Explain about your product. Description should not be less than 200 letters"
+                  formControlName="productDescription" id="productDescription" rows="3"></textarea>
+                <div *ngIf="submitted && productForm.controls.productDescription.errors">
+                  <div class="error" *ngIf="productForm.controls.productDescription.errors.required">* Product
+                    Description is required</div>
+                  <div class="error" *ngIf="productForm.controls.productDescription.errors.minlength">* Product
+                    Description should not be less than 100 Characters length</div>
+                </div>
+              </div>
+              <hr class="mt-4">
+              <div class="row">
+                <div class="col-md-4 mb-4">
+                  <label class="form-label me-2" for="productCategory">Category</label>
+                  <select #productCategory id="productCategory" formControlName="productCategory" class="w-20"
+                    (change)="onCategoryChange(productCategory.value)">
+                    <option *ngFor="let category of primaryCategory" [value]="category.id">
+                      {{category.categoryName}}
+                    </option>
+
+                  </select>
+
+                  <div *ngIf="submitted && productForm.controls.productCategory.errors">
+                    <div class="error" *ngIf="productForm.controls.productCategory.errors.required">* Select the Product
+                      Category</div>
+                  </div>
+
+
+                </div>
+
+
+                <div class="col-md-8 mb-4">
+                  <div formArrayName="subCategories" *ngIf="subCategories.length > 0">
+
+                    <div *ngFor="let cat of subCategories.controls;let i = index" class="form-check form-xcheck-inline">
+                      <input #cat class="form-check-input" (change)="onSubCategoryClick(cat.value,i)"
+                        formControlName="{{i}}" type="checkbox" id="{{i}}" value="{{cat}}">
+                      <label class="form-check-label" for="i">{{subCategoryList[i].display_name}}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="submitted && selectedCategoryList.length <=1">
+                  <div class="error">* Minimum One Sub Category should be selected </div>
+                </div>
+
+              </div>
+              <hr class="mt-4">
+
+
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="form-label" for="tags">Tags</label>
+                    <input type="text" #tag id="tagName" style="min-height:30px;min-width:300px" formControlName="tags"
+                      class="form-inline ms-3" formControlName="tags" />
+                    <button type="button" (click)="addTag(tag.value)" id="addtag" class="button-primary ms-3">Add
+                      Tag</button>
+                  </div>
+                  <div *ngIf="submitted && tags.length <=0">
+                    <div class="error">* Add Minimu One Tag </div>
+                  </div>
+
+
+
+                </div>
+
+                <div class="col-md-5 col-sm-12">
+                  <div *ngFor="let tag of tags;let i = index" class="form-check form-check-inline">
+                    <input class="form-check-input form-inline" (change)="onTagChange(i)" type="checkbox"
+                      id="{{'tag'+i}}" [checked]="true" value="{{tag}}">
+                    <label class="form-check-label" for="i">{{tag}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12 text-info">
+                  Tags will help the product search. Ex: 'winter clothing', 'price under 20'
+                </div>
+              </div>
+              <hr class="mt-4">
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="brand">Brand</label>
+                <input type="text" id="brand" formControlName="brand" placeholder="Manufacturer's Brand Name"
+                  class="form-control form-control-sm w-50" />
+                <div *ngIf="submitted && productForm.controls.brand.errors">
+
+                  <div class="error" *ngIf="productForm.controls.brand.errors.required">* Brand Name is required</div>
+                </div>
+              </div>
+              <hr>
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="kind">Kind</label>
+                <input type="text" id="kind" placeholder="Example: Western Appareal / Youth Head Phones"
+                  formControlName="kind" class="form-control-inline ms-3 form-control-sm w-50" />
+
+
+                <div *ngIf="submitted && productForm.controls.kind.errors">
+
+                  <div class="error" *ngIf="productForm.controls.kind.errors.required">* Kind Attribute
+                    is a required field</div>
+                </div>
+
+              </div>
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="material">Material</label>
+                <input type="text" id="material" placeholder="Example: Cotton / Wood / Plastic "
+                  formControlName="material" class="form-control-inline ms-3 form-control-sm w-50" />
+
+
+                <div *ngIf="submitted && productForm.controls.material.errors">
+
+                  <div class="error" *ngIf="productForm.controls.material.errors.required">* Material
+                    Name is required</div>
+                </div>
+
+              </div>
+              <div class="form-outline mb-4">
+
+                <label class="form-label" for="mpn">MPN</label>
+                <input type="text" id="mpn" placeholder="Manufactures Part Number if any" formControlName="mpn"
+                  class="form-control-inline ms-3 form-control-sm w-50" />
+
+              </div>
+
+              <hr>
+
+          
+              <div class="d-flex justify-content-start pt-3">
+                <button type="submit" class="btn btn-warning  ms-2">Save Data to Local</button>
+              </div>
+
+              <div *ngIf="isSaveSuccessful" class="mx-5">
+                <h6 style="color: green;"> Data Saved Successfully, Please continue for the next steps </h6>
+
+              </div>
+
+
+
             </div>
-  
-          </form>
-        </div>
+
+
+          </div>
+
+        </form>
       </div>
     </div>
   </div>
+</div>

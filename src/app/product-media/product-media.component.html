@@ -1,0 +1,114 @@
+<div class="container-fluid">
+  <div class="container">
+    <div *ngIf="isLocalDataExist" class="alert alert-info" role="alert">
+      <i class="fa fa-2x fa-info-circle"></i> Un-Submitted Data Found, If you like, you can Save & continue or You can <button type="button" (click)="clearData()" class="btn btn-primary"> Clear</button> it & Start from Scratch.
+    </div>
+    <div class="card">
+      <div class="card-header h6 text-uppercase bg-dark text-light">
+        {{step.stepName}}
+      </div>
+      <div class="card-body">
+        <div class="mx-5">
+          <div class="mt-5 mb-5">
+            <h5>Upload Product Images</h5>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <label class="btn btn-default p-0">
+                  <input type="file" accept="image/*" (change)="selectFile($event)" />
+                </label>
+              </div>
+              <div *ngIf="loading" class="d-flex justify-content-center m-5">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            
+              <div class="col-4">
+                <button
+                  class="btn btn-success btn-sm float-right"
+                  [disabled]="!selectedFiles"
+                  (click)="upload()"
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+            <div *ngIf="imageInfos.length >0" (click)="SaveandContinue()" class="d-flex justify-content-start pt-3">
+              <button type="submit" class="btn btn-warning  ms-2">Save Data to Local</button>
+            </div>
+            
+            <div class="mt-3">
+              <img [src]="preview" class="preview">
+            </div>
+            
+            <div *ngIf="currentFile && progress" class="progress my-3">
+              <div
+                class="progress-bar progress-bar-info"
+                role="progressbar"
+                attr.aria-valuenow="{{ progress }}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                [ngStyle]="{ width: progress + '%' }"
+              >
+                {{ progress }}%
+              </div>
+            </div>
+            
+            <div *ngIf="message" class="alert alert-secondary" role="alert">
+              {{ message }}
+            </div>
+            
+            <div class="card mt-4">
+              <div *ngIf="imageInfos.length > 0" class="h5 bg-light text-dark pt-3 ps-3">Uploaded Images</div>
+              <div class="row">
+                <div *ngFor="let image of imageInfos" class="col-md-3 mx-3 px-3 text-center border">
+                  <button (click)="openFormModal(image)">
+                    <img src="https://setnext-eshop.s3.amazonaws.com/images/{{image}}" alt="{{image}}" height="120px" />
+                  </button>
+                  <p><a href="https://setnext-eshop.s3.amazonaws.com/images/{{image}}">{{image}}</a></p>
+                  
+           
+
+                </div>
+              </div>
+              <!-- <ul class="list-group list-group-flush">
+                <li *ngFor="let image of imageInfos" class="list-group-item">
+                  <button (click)="openFormModal(image)">
+                    <img src="https://setnext-eshop.s3.amazonaws.com/images-test/{{image}}" alt="{{image}}" height="80px" />
+                  </button>
+                  <p><a href="https://setnext-eshop.s3.amazonaws.com/images-test/{{image}}">{{image}}</a></p>
+                  
+                </li>
+              </ul> -->
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="quoteForm" tabindex="-1" role="dialog" aria-labelledby="quoteForm" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered bg-light" role="document">
+    <div class="modal-content p-md-3 tbl-head">
+      <div class="modal-header">
+        <h4 class="modal-title"><span class="tbl-head">{{currentImageModal}}</span></h4>
+        <button class="close" type="button" (click)="closeModal()" data-dismiss="modal" aria-label="Close"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="pb-5">
+          <div class="container">
+            <img src="{{imageSourceUrl}}{{currentImageModal}}" alt="{{currentImageModal}}" width="400px" />
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+

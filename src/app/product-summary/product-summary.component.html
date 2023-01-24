@@ -1,0 +1,221 @@
+<div class="container-flux mt-5 mb-5">
+
+    <!-- <div *ngIf="loading" class="d-flex justify-content-center m-5">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="product==null && error==''" class="container bg-white">
+        <h4>
+            <fa-icon style="color: red;" [icon]="faFileCircleExclamation"></fa-icon> No product found {{pname}}
+        </h4>
+    </div>
+    <div *ngIf="error!=''" class="container bg-white">
+        <h4 style="color:red ;">
+            <fa-icon [icon]="faTriangleExclamation"> </fa-icon> {{error}}
+        </h4>
+    </div> -->
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-1 d-none d-xl-block">
+                        <div *ngFor="let media of productMedias; index as i" class="thumbnail text-center mt-2 border">
+                            <img (mouseover)='over(media)' src="{{imageUrl}}{{media}}?d=100x100" width="70">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="images">
+                            <div class="text-center"> <img id="main-image"
+                                    src="{{imageUrl}}{{productMedias[0]}}?d=1000x1500" width="400" height="600" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="product p-4">
+                            <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i><a>
+                                    <span class="ms-1 ">Back</span></a> </div>
+                            <div style="text-align: right;">
+
+                                <span><span class="mx-4"><i [ngStyle]="wishItem?{color:'red'}:{color:'pink'}"
+                                            (click)="wishlist('p001')" id="wishlist-span"
+                                            class="fa fa-lg fa-heart text-red"></i></span><i
+                                        class="fa fa-lg fa-share-alt"></i></span>
+                            </div>
+                            <div class="mt-4 mb-3"> <span
+                                    class="text-uppercase text-muted brand">{{productMetaData.brand}}</span>
+                                <h5 class="text-uppercase">{{productMetaData.productName}}</h5>
+                                <div class="price d-flex flex-row align-items-center">
+                                    <span *ngIf="markettingAttributes.isOnSale && priceInfo.sales_price!=null"
+                                        class="act-price">${{priceInfo.sales_price}}</span>
+                                    <div class="ml-2"> <small
+                                            [ngClass]="markettingAttributes.isOnSale? 'dis-price mx-2':'act-price'">${{priceInfo.mrp_price}}</small>
+                                        <span class="ms-2 text-success"
+                                            *ngIf="markettingAttributes.isOnSale && priceInfo.discount!=null">{{priceInfo.discount}}
+                                            % Offer</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-content-left">
+                                <div>
+
+                                    <i *ngIf="markettingAttributes.starRating==0"
+                                        [ngStyle]="markettingAttributes.starRating ==0?{'color':'grey'}:{'color':'grey'}"
+                                        class='fa fa-star-o me-1'></i>
+                                    <i *ngIf="markettingAttributes.starRating>0 && markettingAttributes.starRating<=0.5"
+                                        [ngStyle]="markettingAttributes.starRating >0?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star-half-empty me-1'></i>
+                                    <i *ngIf="markettingAttributes.starRating>0.5"
+                                        [ngStyle]="markettingAttributes.starRating >0?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star me-1'></i>
+
+
+                                    <i *ngIf="markettingAttributes.starRating>1 && markettingAttributes.starRating<=1.5"
+                                        [ngStyle]="markettingAttributes.starRating >1?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star-half-empty me-1'></i>
+                                    <i *ngIf="markettingAttributes.starRating>1.5"
+                                        [ngStyle]="markettingAttributes.starRating >1?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star me-1'></i>
+
+                                    <i *ngIf="markettingAttributes.starRating>2 && markettingAttributes.starRating<=2.5"
+                                        [ngStyle]="markettingAttributes.starRating >2?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star-half-empty me-1'></i>
+                                    <i *ngIf="markettingAttributes.starRating>2.5"
+                                        [ngStyle]="markettingAttributes.starRating >2?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star me-1'></i>
+
+                                    <i *ngIf="markettingAttributes.starRating>3 && markettingAttributes.starRating<=3.5"
+                                        [ngStyle]="markettingAttributes.starRating >3?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star-half-empty me-1'></i>
+                                    <i *ngIf="markettingAttributes.starRating>3.5"
+                                        [ngStyle]="markettingAttributes.starRating >3?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star me-1'></i>
+
+                                    <i *ngIf="markettingAttributes.starRating>4 && markettingAttributes.starRating<=4.5"
+                                        [ngStyle]="markettingAttributes.starRating >4?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star-half-empty me-1'></i>
+                                    <i *ngIf="markettingAttributes.starRating>4.5"
+                                        [ngStyle]="markettingAttributes.starRating >4?{'color':'orange'}:{'color':'grey'}"
+                                        class='fa fa-star me-1'></i>
+
+                                    <small class="ms-2 text-muted">({{markettingAttributes.starRating}})</small>
+
+
+
+
+                                </div>
+                            </div>
+                            <p class="about">{{productMetaData.productDescription}}</p>
+                            <div class="row sizes mt-5">
+                                <div style="min-width: 200px;" class="col-lg-3 col-md-6 col-sm-3 col-xs-3">
+                                    <h6 class="text-uppercase">Color : <span>{{productVariant.colors[0].name}} </span>
+                                    </h6>
+                                </div>
+                                <div class="col-lg-3 col-md-1 col-sm-4 col-xs-4"
+                                    [ngStyle]="{'height' : '20px', 'width' : '20px','background-color':productVariant.colors[0].value}">
+                                </div>
+
+
+                                <ul *ngIf="productVariant!=null && productVariant.colors!=null"
+                                    class="list-group list-group-horizontal ">
+                                    <li *ngFor="let pcolor of productVariant.colors; index as i"
+                                        class="list-group-item xcolor-box">
+                                        <label class="radio">
+                                            <input type="radio" name="color" value="{{pcolor.name}}">
+                                            <div
+                                                [ngStyle]="{'height' : '20px', 'width' : '20px','background-color':pcolor.value}">
+
+
+                                            </div>
+                                        </label>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div *ngIf="productVariant!=null && productVariant.sizes!=null" class="sizes mt-5">
+                                <h6 class="text-uppercase">Size : <span>{{productVariant.sizes[0]}}</span></h6>
+                                <label *ngFor="let psize of productVariant.sizes; index as i" class="radio">
+                                    <input type="radio" name="size" value="{{psize}}"> <span>{{psize}}</span>
+                                </label>
+
+
+
+                            </div>
+                            <div class="mt-3"><span class="fw-bold">Model:</span> {{productVariant.models[0]}}</div>
+                            <div class="mt-3"><span class="fw-bold">Availability:</span>{{stockInfo.isOnStock ?' In
+                                Stock':
+                                ' Not Available'}}</div>
+                            <div class="mt-3"><span class="fw-bold">Model:</span> {{stockInfo.stockQuantity}}
+                            </div>
+                            
+
+                            <div *ngIf="technicalAttributes.feature_attributes!=null">
+
+                                <div *ngFor="let attribute of technicalAttributes.feature_attributes; index as i"
+                                    class="mt-3"><span class="fw-bold text-capitalize">{{attribute.key}}:</span>
+                                    {{attribute.value}}
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="cart mt-4 align-items-center">
+                                <button
+                                    [ngClass]="stockInfo.isOnStock ?'btn btn-danger text-uppercase mr-2 px-4':'btn btn-light text-uppercase mr-2 px-4'"
+                                    [disabled]="!stockInfo.isOnStock">Add to cart</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-flux mt-5 mb-5">
+    <div class="col-md-12 mt-3">
+        <div class="product p-4">
+            <div class="row align-top">
+                <div class="col-md-6 d-flex justify-content-between align-items-top table-responsive">
+
+                    <table *ngIf="product!=null && technicalAttributes.technical_attributes!=null"
+                        class="table table-responsive m-1">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="color:red ;">Technical Details</th>
+                                <th scope="col"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let tattribute of technicalAttributes.technical_attributes">
+                                <th scope="row">{{tattribute.key}}</th>
+                                <td>{{tattribute.value}}</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
+                <div class="col-md-6 d-flex align-top">
+                    <div *ngIf="technicalAttributes.product_notes!=null" class="mt-3">
+                        <span class="fw-bold mb-5">About this item:</span>
+                        <div class="mb-2"></div>
+                        <ul class="list-group list-group-flush">
+                            <li *ngFor="let note of technicalAttributes.product_notes" class="list-group-item">{{note}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

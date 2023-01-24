@@ -7,11 +7,8 @@ export interface ProductMetaData {
     subCategorySelections: boolean[];
     tags: string[];
     brand: string;
-    priceInfo: PriceInfo;
+    kind: string;
+    material:string;
+    mpn:string;
 }
 
-export interface PriceInfo {
-    mrp_price: number;
-    sales_price: number;
-    discount: number
-}

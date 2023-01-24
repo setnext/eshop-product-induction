@@ -38,23 +38,47 @@ export class LocalService {
     }
   }
 
-  public getData(key: string,type:ObjectType, isDecryptRequired: boolean) {
+  public getData(key: string, type: ObjectType, isDecryptRequired: boolean) {
     if (isDecryptRequired) {
-      if(type==ObjectType.json){
-      let data = localStorage.getItem(key) || "";
-      let jsonObj = JSON.parse(this.decrypt(data));
-      console.log(jsonObj);
-      return jsonObj;
-      }
-      else
-      {
+      if (type == ObjectType.json) {
         let data = localStorage.getItem(key) || "";
-      return this.decrypt(data);
+        if (data == "") {
+          console.log("data is emptry");
+          return null;
+        }
+        console.log("data: ", data)
+        let jsonObj = JSON.parse(this.decrypt(data));
+        return jsonObj;
       }
-      
+      else {
+        let data = localStorage.getItem(key) || "";
+        return this.decrypt(data);
+      }
+
 
     }
     else {
+      if (type == ObjectType.json) {
+        let data = localStorage.getItem(key) || "";
+        console.log(data)
+        if (data == "") {
+          console.log("data is emptry");
+          return null;
+        }
+        else {
+          let jsonObj = JSON.parse(data);
+          return jsonObj;
+        }
+      }
+      else {
+        let data = localStorage.getItem(key) || "";
+        if (data == "") {
+          console.log("data is emptry");
+          return null;
+        }
+        return data;
+      }
+
 
       return localStorage.getItem(key)
     }

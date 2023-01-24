@@ -4,10 +4,11 @@ import { StepModel } from 'src/app/interfaces/steps';
 
 const STEPS = [
   { stepIndex: 1, isComplete: false,stepName:'Product Meta Data' },
-  { stepIndex: 2, isComplete: false,stepName:'Price Info' },
-  { stepIndex: 3, isComplete: false, stepName:'Product Media' },
-  { stepIndex: 4, isComplete: false, stepName:'Technical Details' },
-  { stepIndex: 5, isComplete: false, stepName:'Summary' }
+  { stepIndex: 2, isComplete: false,stepName:'Product Media' },
+  { stepIndex: 3, isComplete: false, stepName:'Varient Info' },
+  { stepIndex: 4, isComplete: false, stepName:'Sales/ Marketting Attributes' },
+  { stepIndex: 5, isComplete: false, stepName:'Technical Details' },
+  { stepIndex: 6, isComplete: true, stepName:'Summary Details' }
 ];
 
 @Injectable({
@@ -25,6 +26,9 @@ export class StepsService {
   setCurrentStep(step: StepModel): void {
     this.currentStep$.next(step);
     
+  }
+  resetCurrentStep(){
+    this.currentStep$.next(this.steps$.value[0]);
   }
 
   getCurrentStep(): Observable<StepModel|null> {
@@ -44,6 +48,8 @@ export class StepsService {
   }
 
   isLastStep(): boolean {
+    console.log("this.currentStep$.value: ",this.currentStep$.value);
+    console.log("this.steps$.value.length: ",this.steps$.value.length);
     return this.currentStep$.value?.stepIndex === this.steps$.value.length;
   }
 }

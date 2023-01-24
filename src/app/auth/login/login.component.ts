@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     }
     console.log(data.userName.trim());
     console.log(data.password.trim());
-    if(data.userName.trim()=="eshop-admin@setnext.io" && data.password.trim()=="setnext@321")
+    if(data.userName.trim()=="admin@setnext.io" && data.password.trim()=="admin")
     {
       this.localStore.saveData("isLogged","true",ObjectType.text, false);
       this.localStore.saveData('customerToken',this.customerToken,ObjectType.text, false);

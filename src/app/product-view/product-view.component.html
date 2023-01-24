@@ -1,0 +1,73 @@
+<div class="container mt-3" style="min-height: 700px;">
+    <div class="card">
+        <div class="card-header h6 text-uppercase bg-dark text-light">
+            View Products
+        </div>
+
+        <div class="card-body">
+            <form [formGroup]="productForm">
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <label class="form-label me-2" for="productCategory">Category</label>
+                        <select #productCategory formControlName="productCategory" id="productCategory" class="w-20"
+                            (change)="onCategoryChange(productCategory.value)">
+                            <option *ngFor="let category of primaryCategory" [value]="category.id">
+                                {{category.categoryName}}
+                            </option>
+
+                        </select>
+
+                    </div>
+                    <div class="col-md-8 mb-4">
+                        <label class="form-label me-2" for="productSubCategory">Sub Category</label>
+                        <select #productSubCategory formControlName="productSubCategory" id="productSubCategory" class="w-20"
+                            (change)="onSubCategoryChange(productSubCategory.value)">
+                            <option *ngFor="let category of subCategoryList" [value]="category.sub_category_path">
+                                {{category.display_name}}
+                            </option>
+
+                        </select>
+
+
+
+
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+        
+        
+    </div>
+
+    <div *ngIf="products" class="alert alert-dark mt-2" role="alert">
+        <h6>Total Products Found: {{products.length}}</h6>
+    </div>
+    
+    <table class="table mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">ProductID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of products;let i = index">
+                <th scope="row">{{i+1}}</th>
+                
+                <td>{{p.productName}}</td>
+                <td>{{p._id}}</td>
+                <td>{{p.productDescription.substring(0,60)}} ...</td>
+                <td>{{p.brand}}</td>
+                <td><a target="_blank" href="{{eshopUrl}}{{p.productName.replaceAll(' ', '-')}}/{{p._id}}?cat={{categoryString}}">more..</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+

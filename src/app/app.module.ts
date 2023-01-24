@@ -20,6 +20,13 @@ import { FormPageComponent } from './form-page/form-page.component';
 import { CompletePageComponent } from './complete-page/complete-page.component';
 import { ProductWizardComponent } from './product-wizard/product-wizard.component';
 import { ProductMetadataComponent } from './product-metadata/product-metadata.component';
+import { ProductMediaComponent } from './product-media/product-media.component';
+import { ProductVariantComponent } from './product-variant/product-variant.component';
+import { ProductAttributesComponent } from './product-attributes/product-attributes.component';
+import { ProductTechnicalDetailsComponent } from './product-technical-details/product-technical-details.component';
+import { ProductSummaryComponent } from './product-summary/product-summary.component';
+import { ProductSavesuccessfulComponent } from './product-savesuccessful/product-savesuccessful.component';
+import { ProductViewComponent } from './product-view/product-view.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -40,7 +47,15 @@ export const configFactory = (configService: ConfigService) => {
     FormPageComponent,
     CompletePageComponent,
     ProductWizardComponent,
-    ProductMetadataComponent
+    ProductMetadataComponent,
+    ProductMediaComponent,
+    ProductVariantComponent,
+    ProductAttributesComponent,
+    ProductTechnicalDetailsComponent,
+    ProductSummaryComponent,
+    ProductSavesuccessfulComponent,
+    ProductViewComponent,
+    
   ],
   imports: [
     BrowserModule,

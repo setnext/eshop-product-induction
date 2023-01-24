@@ -11,23 +11,14 @@
     background-color: rgb(112, 157, 246);
  }
 
- input,
-input::placeholder {
-    font: 15px/3 sans-serif;
-    height: 20px;
-}
-select{
-    min-width: 100px;
-    height: 30px;
-}
+
+
 
 .error{
     color:red;
 }
  
-label{
-   min-width: 100px;
-}
+
  .card-header{
     font-size: 24px;
     text-transform: uppercase;
@@ -52,3 +43,6 @@ label{
     top: 13px;
     }
 
+label{
+    min-width:150px;
+}

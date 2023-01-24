@@ -7,6 +7,8 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { FormPageComponent } from './form-page/form-page.component';
 import { HomeComponent } from './home/home.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductSavesuccessfulComponent } from './product-savesuccessful/product-savesuccessful.component';
+import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductWizardComponent } from './product-wizard/product-wizard.component';
 
 const routes: Routes = [
@@ -14,7 +16,9 @@ const routes: Routes = [
   {path:'login',component:LoginComponent,pathMatch: 'full'},
   {path:'plist',component:ProductListComponent,pathMatch: 'full'},
   {path:'pcreate',component:CreateProductComponent,pathMatch: 'full'},
+  {path:'create-success',component:ProductSavesuccessfulComponent,pathMatch: 'full'},
   {path:'create-category',component:CreateCategoryComponent,pathMatch: 'full'},
+  {path:'view-products',component:ProductViewComponent,pathMatch: 'full'},
   {
     path: 'create-product',
     component: ProductWizardComponent

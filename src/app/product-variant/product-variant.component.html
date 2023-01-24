@@ -1,0 +1,122 @@
+<div class="container-fluid">
+
+    <div class="container">
+        <div *ngIf="isLocalDataExist" class="alert alert-info" role="alert">
+            <i class="fa fa-2x fa-info-circle"></i> Un-Submitted Data Found, If you like, you can Save & Continue or You can <button type="button" (click)="clearData()" class="btn btn-primary"> Clear</button> it and Start from the Scratch.
+          </div>
+      <div class="card">
+        <div class="card-header h6 text-uppercase bg-dark text-light">
+          {{step.stepName}}
+        </div>
+        <div class="card-body">
+          <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
+            <div class="card mb-4">
+                <div style="font-weight: 600;" class="h5 bg-light text-dark pt-1 ps-1 ">Colors Info </div>
+            </div>  
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-outline mb-4">
+                    <label for="productColor" class="form-label">Select Product Colors:</label>
+<input #color type="color" class="form-control-inline form-control-color ms-3" id="productColor" value="#000000" title="Choose your color">
+
+                </div>
+                <div class="form-outline mb-4">
+                   
+                  <label class="form-label" for="productName">Logical Color Name</label>
+                  <input #colorName  style="min-width:300px" type="text" id="productName"  placeholder ="Example : Dark Denim Blue" formControlName="colorName"
+                    class="form-control-inline form-control-sm  ms-3" />
+                    <button class="form-control-inline form-control-sm  ms-3" (click)="addColors(color.value,colorName.value)" type="button">Add Color</button> <span>  (You can add Multiple Colors, Minimum 1 Colour should be added)</span>
+                </div>
+                <h6 *ngIf="colorInvalid" class="text-danger">
+                    Color Name cannot be empty, color is Required field
+                </h6>
+                <h6 *ngIf="minColorLength" class="text-danger">
+                    Minimum 1 Colour should be added
+                </h6>
+                <div class="form-outline mb-4">
+                    <div class="row">
+                        <div *ngFor="let color of colors" class="col-md-3 mx-2 border bg-light" style="min-height: 60px;color:wheat;vertical-align: middle;">
+                            <div class="mt-3 mb-3" [ngStyle]="{'background-color': color.value,'height':'50px' }">
+                                <span class="mx-3 mt-3 h6">{{color.name}} / {{color.value}}</span>
+                                <button (click)="removeColor(color.value)" class="btn btn-info btn-sm ms-4 mt-2"><i class="fa fa-close"></i></button>
+                                </div>
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+                <div class="card mb-4">
+                    <div style="font-weight: 600;" class="h5 bg-light text-dark pt-1 ps-1 ">Size Info</div>
+                </div> 
+                <div class="form-outline mb-4">
+                   
+                    <label class="form-label" for="size">Enter the Size</label>
+                    <input #sizeName  style="min-width:300px" type="text" id="size"  placeholder ="Example : SM / M / L to represent the Size of the Product" formControlName="sizeName"
+                      class="form-control-inline form-control-sm  ms-3" />
+                      <button class="form-control-inline form-control-sm  ms-3" (click)="addSizes(sizeName.value)" type="button">Add Size</button><span>  (You can add Multiple Sizes,  Minimum 1 Size should be added)</span>
+                  </div>
+                  <h6 *ngIf="sizeInvalid" class="text-danger">
+                    Size cannot be empty, size is Required field
+                </h6>
+                <h6 *ngIf="minSizeLength" class="text-danger">
+                    Minimum 1 Size should be added
+                </h6>
+                  <div class="form-outline mb-4">
+                      <div class="row">
+                          <div *ngFor="let size of sizes" class="col-md-3 mx-2 border bg-light" style="min-height: 60px;color:wheat;vertical-align: middle;">
+                              <div class="mt-3 mb-3" [ngStyle]="{'background-color':'black' ,'height':'50px' }">
+                                  <span class="mx-3 mt-3 h6">{{size}}</span>
+                                  <button (click)="removeSize(size)" class="btn btn-info btn-sm ms-4 mt-2"><i class="fa fa-close"></i></button>
+                                  </div>
+                          </div>
+                          
+                      </div>
+                     
+                  </div>
+                  
+                  <div class="card mb-4">
+                    <div style="font-weight: 600;" class="h5 bg-light text-dark pt-1 ps-1 ">Model Information</div>
+                </div> 
+                <div class="form-outline mb-4">
+                   
+                    <label class="form-label" for="modelName">Enter the Model</label>
+                    <input #modelName  style="min-width:300px" type="text" id="modelName"  placeholder ="Example :  M100567" formControlName="modelName"
+                      class="form-control-inline form-control-sm  ms-3" />
+                      <button class="form-control-inline form-control-sm  ms-3" (click)="addModels(modelName.value)" type="button">Add Model</button><span>  (You can add Multiple Models, Minimum 1 Model should be added)</span>
+                  </div>
+                  <h6 *ngIf="modelInvalid" class="text-danger">
+                    Model Name cannot be empty, Model is Required field
+                </h6>
+                <h6 *ngIf="minModelLength" class="text-danger">
+                    Minimum 1 Model should be added
+                </h6>
+                  <div class="form-outline mb-4">
+                      <div class="row">
+                          <div *ngFor="let model of models" class="col-md-3 mx-2 border bg-light" style="min-height: 60px;color:wheat;;vertical-align: middle;">
+                              <div class="mt-3 mb-3" [ngStyle]="{'background-color':'black' ,'height':'50px' }">
+                                  <span class="mx-3 mt-3 h6">{{model}}</span>
+                                  <button (click)="removeModel(model)" class="btn btn-info btn-sm ms-4 mt-2"><i class="fa fa-close"></i></button>
+                                  </div>
+                              
+                                  
+                          </div>
+                          
+                      </div>
+                     
+                  </div>
+                  <div class="d-flex justify-content-start pt-3">
+                    <button type="submit" class="btn btn-warning  ms-2">Save Data to Local</button>
+                  </div>
+                  <div *ngIf="isSaveSuccessful" class="mx-5" >
+                    <h6 style="color: green;"> Data Saved Successfully, Please continue for the next steps </h6>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    
+</div>

@@ -5,10 +5,12 @@ export interface Config {
 
   contentServiceUrl: string;
   authorizationHeader: string;
+  eshopWebUrl: string;
   apiToken:string;
   imageCloudfrontURL:string;
   productServiceUrl:string;
   rangeServiceUrl:string;
+  imageSourceUrl:string
 }
 
 @Injectable({
@@ -23,7 +25,9 @@ export class ConfigService {
     apiToken:'',
     imageCloudfrontURL:'',
     productServiceUrl:'',
-    rangeServiceUrl:''
+    rangeServiceUrl:'',
+    imageSourceUrl:'',
+    eshopWebUrl:''
 
 };
 

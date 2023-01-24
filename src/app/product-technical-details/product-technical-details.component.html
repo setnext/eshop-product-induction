@@ -1,0 +1,154 @@
+<div class="container-fluid">
+
+    <div class="container">
+        <div *ngIf="isLocalDataExist" class="alert alert-info" role="alert">
+            <i class="fa fa-2x fa-info-circle"></i> Un-Submitted Data Found, If you like, you can Save & Continue or You can <button type="button" (click)="clearData()" class="btn btn-primary"> Clear</button> it and Start from the Scratch.
+          </div>
+        <div class="card">
+            <div class="card-header h6 text-uppercase bg-dark text-light">
+                {{step.stepName}}
+            </div>
+            <div class="card-body">
+                <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
+                     <!-- Section: Feature Attributes -->
+                    <section id="feautreAttributes">
+                        <div class="card mb-4">
+                            <div style="font-weight: 600;" class="h5 bg-light text-dark pt-1 ps-1 ">Feature Attributes
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="feature_key">Key</label>
+                                    <input #feature_key style="min-width:300px" type="text" id="feature_key"
+                                        placeholder="Example : Cushion Style" formControlName="feature_key"
+                                        class="form-control-inline form-control-sm  ms-3" />
+                                </div>
+                                <div class="form-outline mb-4">
+
+                                    <label class="form-label" for="feature_value">Value</label>
+                                    <input #feature_value style="min-width:300px" type="text" id="feature_value"
+                                        placeholder="Example : Fluffy" formControlName="feature_value"
+                                        class="form-control-inline form-control-sm  ms-3 me-3" />
+                                    <button type="button" class="btn btn-primary"
+                                        (click)="addFeatureAttribute(feature_key.value,feature_value.value)">Add
+                                        Attribute</button> <span class="ms-3">  (You can add multiple key/value pair, Minimum 3 Pairs needs to be added)</span>
+                                </div>
+                                <div class="error mb-2" *ngIf="isFeatureAttributesInValid">* Key/Value cannot be empty
+                                </div>
+                                <div class="error mb-2" *ngIf="isFeatureAttributeLengthInvalid">* Aleast 3 Generic Featuers should be added
+                                </div>
+                                
+                                <div *ngIf="feature_attribute.length > 0" class="form-outline mb-4 ms-2 me-2">
+                                    <div class="row border  bg-info text-dark">
+
+                                        <div class="col-md-4 border-right">KEY</div>
+                                        <div class="col-md-8">VALUE</div>
+                                    </div>
+                                    <div *ngFor="let feature_att of feature_attribute" class="row border">
+
+                                        <div class="col-md-4 border-right bg-light">{{feature_att.key}}</div>
+                                        <div class="col-md-8">{{feature_att.value}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Section: Technical Attributes -->
+                    <section id="technicalAttributes">
+                        <div class="card mb-4">
+                            <div style="font-weight: 600;" class="h5 bg-light text-dark pt-1 ps-1 ">Technical Attributes
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="feature_key">Key</label>
+                                    <input #technicalFeature_key style="min-width:300px" type="text" id="technicalFeature_key"
+                                        placeholder="Example : US SM" formControlName="technicalFeature_key"
+                                        class="form-control-inline form-control-sm  ms-3" />
+                                </div>
+                                <div class="form-outline mb-4">
+
+                                    <label class="form-label" for="technicalFeature_value">Value</label>
+                                    <input #technicalFeature_value style="min-width:300px" type="text" id="technicalFeature_value"
+                                        placeholder="Example : 40 CM" formControlName="technicalFeature_value"
+                                        class="form-control-inline form-control-sm  ms-3 me-3" />
+                                    <button type="button" class="btn btn-primary"
+                                        (click)="addTechnicalFeatureAttribute(technicalFeature_key.value,technicalFeature_value.value)">Add
+                                        Attribute</button> <span class="ms-3">  (You can add multiple key/value pair, Minimum 3 Pairs needs to be added)</span>
+                                </div>
+                                <div class="error mb-2" *ngIf="isTechnicalAttributesInValid">* Key/Value cannot be empty
+                                </div>
+                                <div class="error mb-2" *ngIf="isTechnicalAttributesLengthInvalid">* Aleast 3 Technical Featuers should be added
+                                </div>
+                                <div *ngIf="technical_attribute.length > 0" class="form-outline mb-4 ms-2">
+                                    <div class="row border  bg-info text-dark">
+
+                                        <div class="col-md-4 border-right">KEY</div>
+                                        <div class="col-md-8">VALUE</div>
+                                    </div>
+                                    <div *ngFor="let technicalFeature_att of technical_attribute" class="row border ">
+
+                                        <div class="col-md-4 border-right bg-light">{{technicalFeature_att.key}}</div>
+                                        <div class="col-md-8">{{technicalFeature_att.value}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="productNotes">
+                        <div class="card mb-4">
+                            <div style="font-weight: 600;" class="h5 bg-light text-dark pt-1 ps-1 ">Product Notes
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                            
+                                <div class="form-outline mb-4">
+
+                                    <label class="form-label" for="product_note">Note</label>
+                                    <textarea #product_note style="min-width:300px me-3" type="text" id="product_note"
+                                        placeholder="Example: Providing awesome experience with new, nice quality outfits and making you feel happy and comfortable fashion clothing" formControlName="product_note"
+                                        class="form-control form-control-sm me-3"></textarea>
+                                       
+                                    <button type="button" class="mt-3 btn btn-primary"
+                                        (click)="addProductNote(product_note.value)">Add
+                                        Note</button> <span class="ms-3">  (You can add multiple Notes, Minimum 3 Notes Should be added)</span>
+                                    
+                                </div>
+                                <div class="error mb-2" *ngIf="isNoteInValid">* Empty Note Cannot be Added
+                                </div>
+                                <div class="error mb-2" *ngIf="isProductNotesLenghtInvalid">* Aleast 3 Product Notes should be added
+                                </div>
+                                <div *ngIf="product_notes.length > 0" class="form-outline mb-4 ms-2">
+                                    <div class="row border  bg-info text-dark">
+
+                                        <div class="col-md-1 border-right">No.</div>
+                                        <div class="col-md-11">Note</div>
+                                    </div>
+                                    <div *ngFor="let note of product_notes;index as i" class="row border ">
+
+                                        <div class="col-md-1 border-right bg-light">{{i+1}}</div>
+                                        <div class="col-md-11">{{note}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start pt-3 mb-2">
+                                <button type="submit" class="btn btn-warning  ms-2">Save Data to Local</button>
+                              </div>
+              
+                              <div *ngIf="isSaveSuccessful" class="mx-5" >
+                                  <h6 class="mt-3" style="color: green;"> Data Saved Successfully, Please continue for the next steps </h6>
+              
+                              </div>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

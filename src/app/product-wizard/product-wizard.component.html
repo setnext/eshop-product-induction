@@ -7,17 +7,26 @@
               <app-product-metadata [step]="$any(currentStep | async)" ></app-product-metadata>
             </ng-container>
             <ng-container *ngSwitchCase="'2'">
-              <app-step-template [step]="$any(currentStep | async)"></app-step-template>
+              <app-product-media [step]="$any(currentStep | async)"></app-product-media>
             </ng-container>
             <ng-container *ngSwitchCase="'3'">
-              <app-step-template [step]="$any(currentStep | async)"></app-step-template>
+              <app-product-variant [step]="$any(currentStep | async)"></app-product-variant>
+            </ng-container>
+            <ng-container *ngSwitchCase="'4'">
+              <app-product-attributes [step]="$any(currentStep | async)"></app-product-attributes>
+            </ng-container>
+            <ng-container *ngSwitchCase="'5'">
+              <app-product-technical-details [step]="$any(currentStep | async)"></app-product-technical-details>
+            </ng-container>
+            <ng-container *ngSwitchCase="'6'">
+              <app-product-summary [step]="$any(currentStep | async)"></app-product-summary>
             </ng-container>
         </ng-container>
     </div>
     
   </div>
 </div>
-<div class="container">
+<div class="container mt-5">
     <div style="height: 30px;display:flex;align-items:flex-end;position: relative;justify-content: right" class="ms-0 mt-0 me-0  px-3 text-uppercase "><div>
         <button (click)="onNextStep()" [disabled]="!(currentStep | async)?.isComplete" class="wizard-continue-btn">
             {{ showButtonLabel() }}

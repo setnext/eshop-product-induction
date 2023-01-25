@@ -102,7 +102,7 @@ this.step.isComplete=true;
               this.progress = Math.round((100 * event.loaded) / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
-              this.uploadService.saveUploadedFileName(this.currentFile?.name);
+              this.uploadService.saveUploadedFileName(this.currentFile?.name.split(" ").join("_"));
               this.imageInfos = this.uploadService.getFiles();
               this.loading = false;
               this.step.isComplete = true;
